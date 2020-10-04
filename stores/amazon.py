@@ -16,6 +16,8 @@ from utils import selenium_utils
 from utils.json_utils import InvalidAutoBuyConfigException
 from utils.logger import log
 from utils.selenium_utils import options, enable_headless, wait_for_element
+from utils.handler import sig_handler
+from signal import signal, SIGINT
 
 AMAZON_URLS = {
     "BASE_URL": "https://www.{}/",
@@ -72,6 +74,7 @@ class Amazon:
         options.add_argument(f"user-data-dir=.profile-amz")
         self.driver = webdriver.Chrome(executable_path=binary_path, options=options)
         self.wait = WebDriverWait(self.driver, 10)
+        signal(SIGINT, sig_handler)
         if path.exists(AUTOBUY_CONFIG_PATH):
             with open(AUTOBUY_CONFIG_PATH) as json_file:
                 try:
