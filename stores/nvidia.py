@@ -12,6 +12,8 @@ from spinlog import Spinner
 from notifications.notifications import NotificationHandler
 from utils.http import TimeoutHTTPAdapter
 from utils.logger import log
+from utils.handler import sig_handler
+from signal import signal, SIGINT
 
 NVIDIA_CART_URL = (
     "https://store.nvidia.com/store?Action=DisplayHGOP2LandingPage&SiteID=nvidia"
@@ -59,6 +61,7 @@ PRODUCT_IDS = json.load(open(PRODUCT_IDS_FILE))
 
 class NvidiaBuyer:
     def __init__(self, gpu, locale="en_us", test=False, interval=5):
+        signal(SIGINT, sig_handler)
         self.product_ids = set([])
         self.cli_locale = locale.lower()
         self.locale = self.map_locales()
