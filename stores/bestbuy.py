@@ -1,11 +1,15 @@
 import json
 import webbrowser
 from time import sleep
+import apprise
+import datetime
 
 from chromedriver_py import binary_path  # this will get you the path variable
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
+
+APPRISE_TXT_CONFIG_PATH = "config/apprise_config.txt"
 
 try:
     from Crypto.PublicKey import RSA
@@ -151,9 +155,23 @@ class BestBuyHandler:
             self.auto_checkout()
         else:
             cart_url = self.add_to_cart()
-            self.notification_handler.send_notification(
-                f"SKU: {self.sku_id} in stock: {cart_url}"
-            )
+            timestamp = datetime.datetime.now()
+            message = f"{timestamp} - SKU: {self.sku_id} in stock: {cart_url}"
+            #self.notification_handler.send_notification(
+            #   message
+            #)
+            self.notify(message)
+            return
+
+
+    def notify(self, message):
+        ar_config = apprise.AppriseConfig()
+        ar_config.add(APPRISE_TXT_CONFIG_PATH)
+        ar = apprise.Apprise()
+        ar.add(ar_config)
+        ar.notify(body=message)
+        return
+
 
     def in_stock(self):
         log.info("Checking stock")
