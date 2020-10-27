@@ -149,7 +149,7 @@ class BestBuyHandler:
 
     def run_item(self):
         while not self.in_stock():
-            sleep(5)
+            sleep(60)
         log.info(f"Item {self.sku_id} is in stock!")
         if self.auto_buy:
             self.auto_checkout()
