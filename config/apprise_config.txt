@@ -1,4 +1,0 @@
-# apprise_config.txt
-mailto://yateendrak:ksynphdwcmkrsbon@gmail.com
-mailto://pranavyk:vwkxurdihbfykwby@gmail.com
-discord://770424194806579242/qBHEAQ_PzikjBK6nVTY3CL1-YWyKm6k-wkSITnxB4Tt5NRwMjqnUqeQZc1lWYfGWG52g
